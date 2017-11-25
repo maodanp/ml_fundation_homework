@@ -66,3 +66,65 @@ $$
 
 * Gini系数
 
+考察Gini系数的图像、熵、分类误差率三者之间的关系。将$$f(x)=-lnx$$在$$x=1$$处一阶展开，忽略高阶无穷小，得到$$f(x) \approx 1-x$$.
+$$
+H(x)=-\sum_{k=1}^Kp_klnp_k  \\ 
+\approx \sum_{k=1}^Kp_k(1-p_k)
+$$
+
+## 方向导数与梯度
+
+### 方向导数
+
+如果函数$$z=f(x,y)$$在点$$P(x,y)$$是可微分的，那么函数在该点沿任一方向L的方向导数都存在，且有：
+$$
+\frac{\partial f}{\partial l} = \frac{\partial f}{\partial x}cos \varphi + \frac{\partial f}{\partial y}sin \varphi
+$$
+其中，$$\varphi$$ 为$$x$$轴到方向$$L$$的转角。
+
+### 梯度
+
+设函数$$z=f(x,y)$$在平面区域D内具有一阶连续偏导数，则对于每一个点$$P(x,y)\in D$$,向量
+$$
+\begin{pmatrix}
+ \frac{\partial f}{\partial x} &  \frac{\partial f}{\partial y}\\
+  \end{pmatrix}
+$$
+为函数$$z=f(x,y)$$在点P的梯度，记做$$gradf(x,y)$$。
+
+* 梯度的方向是函数在改点变化最快的方向
+* 梯度下降法
+
+## 组合数与信息熵关系
+
+### 组合数
+
+* 把$$n$$个物品分成$$k$$组，使得每组物品的个数分别为$$n_1, n_2,\ldots,n_k$$,$$(n=n_1+n_2+\ldots+n_k)$$,则不同的分组方法有$$\frac{n!}{n_1! \cdot n_2! \cdot n_3! \ldots n_k!}$$种。
+
+
+* 上述的简化版本，即$$n$$个物品分成2组，第一组$$m$$个，第二组$$n-m$$个，则分组方法有: $$\frac{n!}{n! \cdot (n-m)!}$$，即 $${n \choose m}$$。
+
+### 组合数背后的秘密
+
+$$
+\begin{align}
+H
+&=\frac{1}{N}ln\frac{N!}{\prod_{i=1}^kn_i!}\\
+&=\frac{1}{N}ln(N!)-\frac{1}{N}\sum_{i=1}^kln(n_i!) \\
+&\to (lnN-1)-\frac{1}{N}\sum_{i=1}^kn_i(lnn_i-1) =lnN-\frac{1}{N}\sum_{i=1}^kn_ilnn_i\\
+&=-\frac{1}{N}((\sum_{i=1}^kn_ilnn_i)-NlnN) =-\frac{1}{N}\sum_{i=1}^k(n_ilnn_i-n_ilnN)\\
+&=-\frac{1}{N}\sum_{i=1}^k(n_iln\frac{n_i}{N})=-\sum_{i=1}^k(\frac{n_i}{N}ln\frac{n_i}{N}) \\
+&\to -\sum_{i=1}^k(p_ilnp_i)
+\end{align}
+$$
+
+
+
+## 参考阅读
+
+[如何直观形象的理解方向导数与梯度](https://www.zhihu.com/question/36301367)
+
+[多元函数微分学](https://wenku.baidu.com/view/5dfb0b5a16fc700aba68fc1f.html)
+
+[梯度下降小结](https://www.cnblogs.com/pinard/p/5970503.html)
+
