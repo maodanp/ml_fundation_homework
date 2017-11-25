@@ -1,0 +1,18 @@
+{
+"plugins": [
+"katex",
+"splitter",
+"prism",
+"expandable-chapters",
+"github"
+],
+"theme-default": {
+        "showLevel": true
+    },
+"pluginsConfig": {
+        "github": {
+            "url": "https://github.com/maodanp/statistic_learning"
+        }
+    }
+}
+
