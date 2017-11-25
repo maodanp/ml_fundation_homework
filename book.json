@@ -1,6 +1,6 @@
 {
 "plugins": [
-"katex",
+"mathjax",
 "splitter",
 "prism",
 "expandable-chapters",
@@ -11,7 +11,7 @@
     },
 "pluginsConfig": {
         "github": {
-            "url": "https://github.com/maodanp/statistic_learning"
+            "url": "https://github.com/maodanp/ml_learning"
         }
     }
 }
