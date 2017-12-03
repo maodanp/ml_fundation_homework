@@ -1,2 +1,5 @@
-* [数学分析](part1/README.md)
-    * [导数与梯度](part1/1_derivative_gradient.md)
+* [数学基础](part1/README.md)
+    * [数学分析](part1/1_math_analysis.md)
+    * [概率论](part1/2_probability.md)
+    * ​
+
