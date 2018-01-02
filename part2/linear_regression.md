@@ -13,10 +13,18 @@ $$
 p(\epsilon^{(i)})=\frac{1}{\sqrt{2\pi}\sigma}exp(-\frac{(\epsilon^{(i)})^2}{2\sigma^2}) \\
 p(y^{(i)}|x^{(i)};\theta)=\frac{1}{\sqrt{2\pi}\sigma}exp(-\frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2}) \\
 L(\theta) = \prod_{i=1}^m\frac{1}{\sqrt{2\pi}\sigma}exp(-\frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2}) \\
-lnL(\theta) = log\prod_{i=1}^m\frac{1}{\sqrt{2\pi}\sigma}exp(-\frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2}) \\
-=\sum_{i=1}^mlog\frac{1}{\sqrt{2\pi}\sigma}exp(-\frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2}) \\
-=mln\frac{1}{\sqrt{2\pi}\sigma}-\sum_{i=1}^m\frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2}
 $$
+$$
+\begin{align}  
+lnL(\theta) 
+&= log\prod_{i=1}^m\frac{1}{\sqrt{2\pi}\sigma}exp(-\frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2}) \\
+&=\sum_{i=1}^mlog\frac{1}{\sqrt{2\pi}\sigma}exp(-\frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2}) \\
+&=mln\frac{1}{\sqrt{2\pi}\sigma}-\sum_{i=1}^m\frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2}
+\end{align}  
+$$
+
+
+
 则代价函数/代价函数可以表示为:
 $$
 J(\theta) = \frac{1}{2}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2
@@ -30,9 +38,13 @@ J(\theta) = \frac{1}{2}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2=\frac{1}{2}(X\t
 $$
 梯度:
 $$
-\nabla{J(\theta)} = \nabla{[\frac{1}{2}(X\theta-y)^T(X\theta-y)]}=\nabla{[\frac{1}{2}(\theta^TX^T-y^T)(X\theta-y)]} \\
-=\nabla{\frac{1}{2}(\theta^TX^TX\theta - \theta^TX^Ty - y^TX\theta+y^Ty)} \\
-=\frac{1}{2}(2X^TX\theta - X^Ty - (y^TX)^T) = X^TX\theta-X^Ty
+\begin{align}
+\nabla{J(\theta)} 
+&= \nabla{[\frac{1}{2}(X\theta-y)^T(X\theta-y)]} \\
+&=\nabla{[\frac{1}{2}(\theta^TX^T-y^T)(X\theta-y)]} \\
+&= \nabla{\frac{1}{2}(\theta^TX^TX\theta - \theta^TX^Ty - y^TX\theta+y^Ty)} \\
+&= \frac{1}{2}(2X^TX\theta - X^Ty - (y^TX)^T) = X^TX\theta-X^Ty
+\end{align}
 $$
 令偏导数为0, 得到参数的最优解:
 $$
@@ -56,11 +68,15 @@ $$
 
   梯度方向为:
   $$
-  \frac{\partial J(\theta)}{\partial \theta_j} = \frac{\partial}{\partial \theta_j} \frac{1}{2}(h_\theta(x) - y)^2 \\
-  =2 \cdot \frac{1}{2}(h_\theta(x) - y) \cdot \frac{\partial}{\partial \theta_j}(h_{\theta}(x)-y) \\
-  =(h_{\theta}(x)-y) \cdot \frac{\partial}{\partial \theta_j}(\sum_{i=0}^n\theta_ix_i-y)\\
-  =(h_{\theta}(x)-y)x_j
+  \begin{align}
+  \frac{\partial J(\theta)}{\partial \theta_j} 
+  &= \frac{\partial}{\partial \theta_j} \frac{1}{2}(h_\theta(x) - y)^2 \\
+  &=2 \cdot \frac{1}{2}(h_\theta(x) - y) \cdot \frac{\partial}{\partial \theta_j}(h_{\theta}(x)-y) \\
+  &=(h_{\theta}(x)-y) \cdot \frac{\partial}{\partial \theta_j}(\sum_{i=0}^n\theta_ix_i-y)\\
+  &=(h_{\theta}(x)-y)x_j
+  \end{align}
   $$
+
 
 
 ### 回归正则化方法
@@ -87,7 +103,7 @@ J(\theta) = \frac{1}{2}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2 + \lambda \sum_
 $$
 Elastic Net:
 $$
-J(\theta) = \frac{1}{2}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2 + \lambda_1  \sum_{j=1}^n|\theta_j| +\lambda_2 \sum_{j=1}^n\theta_j^2 
+J(\theta) = \frac{1}{2}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2 + \lambda_1  \sum_{j=1}^n|\theta_j| +\lambda_2 \sum_{j=1}^n\theta_j^2
 $$
 回归正则化方法在高纬和数据集变量之间多重共线性情况下运行良好。
 
@@ -109,7 +125,7 @@ $$
 
 CV—>$$\lambda$$—>$$\theta$$—>$$\hat y$$
 
-如果给定样本数据充足，进行选择的一种简单方法是随机将数据集切分成三部分，在学习到的不同复杂度的参数对应模型中，选择对验证集有最小预测误差的模型，由于验证集有足够多的数据，用它对模型进行选择也是游戏哦啊的。
+如果给定样本数据充足，进行选择的一种简单方法是随机将数据集切分成三部分，在学习到的不同复杂度的参数对应模型中，选择对验证集有最小预测误差的模型，由于验证集有足够多的数据，用它对模型进行选择也是可以的。
 
 但是实际应用中数据是不充足的，为了选择好的模型可以采用交叉验证的方法。交叉验证的基本思想是重复的使用数据；把给定的数据进行切分，将切分的数据集组合为训练集与测试集，在此基础上反复进行训练、测试以及模型选择。该过程也是为了选择出泛化能力强的模型。
 
@@ -127,9 +143,11 @@ S折交叉验证的特殊形式S=N。
 #### 批量梯度下降算法（batch gradient descent）
 
 $$
+\begin{align}
 Repeat \quad until\quad  convergence \{ \\
-\theta_j := \theta_j + \alpha\sum_{i=1}^m(y^{(i)}-h_\theta(x^{(i)}))x_j^{(i)}\\
-\}
+& \theta_j := \theta_j + \alpha\sum_{i=1}^m(y^{(i)}-h_\theta(x^{(i)}))x_j^{(i)}\\
+&\}
+\end{align}
 $$
 
 我们每一轮的参数迭代更新都用到了所有的训练数据，如果训练数据非常多的话，是**非常耗时的**。
@@ -137,11 +155,13 @@ $$
 #### 随机梯度下降算法（stochastic gradient descent）
 
 $$
+\begin{align}
 Repeat\{ \\
- for \quad i=1 \quad to \quad m, \{ \\
-   \theta_j := \theta_j + \alpha (y^{(i)}-h_\theta(x^{(i)}))x_j^{(i)} \\
- \} \\
+ &for \quad i=1 \quad to \quad m, \{ \\
+&   \theta_j := \theta_j + \alpha (y^{(i)}-h_\theta(x^{(i)}))x_j^{(i)} \\
+&\} \\
 \}
+\end{align}
 $$
 
 随机梯度下降是通过每个样本迭代更新一次，对比上面的BGD，迭代一次需要用到所有训练样本。SGD伴随的一个问题是噪音教BGD要多，使得SGD并不是每次迭代都向着整体最优化方向。 但大体上是往最优值方向移动的。
@@ -149,6 +169,12 @@ $$
 #### 折中梯度下降算法（min-batch gradient descent）
 
 如果不是每拿到一个样本即更改梯度，而是若干个样本的平均梯度作为更新方向，则是mini-batch梯度下降算法。
+
+### Model v.s. Parameter
+
+ML/DL 实际可以分为两个问题: What and How.
+* What: 根据数据(Data)选择模型(Model), 选择模型是**重点** 。
+* How: 如何选择模型(Model)的参数($$\theta$$). SGD/BGD/牛顿法
 
 ### 统计意义下的参数
 
