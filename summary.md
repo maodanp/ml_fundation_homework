@@ -6,3 +6,7 @@
 * [回归](part2/README.md)
     * [线性回归](part2/linear_regression.md)
     * [逻辑回归](part2/logistic_regression.md)
+
+* [决策树](part3/README.md)
+    * [决策树基础](part3/DT_basic.md)
+    * [CART树](part3/cart.md)
