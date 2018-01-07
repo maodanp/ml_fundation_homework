@@ -10,3 +10,8 @@
 * [决策树](part3/README.md)
     * [决策树基础](part3/DT_basic.md)
     * [CART树](part3/cart.md)
+
+* [集成学习](part4/README.md)
+    * [集成学习理论](part4/ensemble_learning.md)
+    * [随机森林](part4/random_forest.md)
+    * [Adaboost算法](part4/adaboost.md)
