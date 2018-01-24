@@ -129,6 +129,46 @@ c_{tjl} =  \frac{K-1}{K} \; \frac{\sum\limits_{x_i \in R_{tjl}}r_{til}}{\sum\lim
 $$
 除了负梯度计算和叶子节点的最佳残差拟合的线性搜索，多元GBDT分类和二元GBDT分类以及GBDT回归算法过程相同。
 
+## XGBOOST
+
+Xgboost是GB算法的高效实现，xgboost中的基学习器除了可以是CART树也可以是线性分类器。
+
+* xgboost在目标函数中显式的增加了正则化项，基学习为CART时，正则化项与树的叶子节点的数量T和叶子节点的权值有关。
+
+$$
+L(\phi)=\sum_{i}l(\hat y_i, y_i)+\sum_k \Omega(f_k) \\
+where \; \Omega(f) = \gamma T+\frac{1}{2}\lambda ||w||^2
+$$
+
+* GB中使用的Loss Function 对$$f(x)$$的一阶导数计算出的残差用于学习生成$$f_t(x)$$,xgboost则使用了二阶导数。第t轮的Loss Function。
+
+$$
+L^{(t)}=\sum_{i=1}^nl(y_i, \hat y_i^{(t-1)}+f_t(x_i))+\Omega(f_t)
+$$
+
+对上式做二阶泰勒展开：g为一阶导数，h为二阶导数
+$$
+L^{(t)} \cong \sum_{i=1}^n[l(y_i, \hat y^{(t-1)})+g_if_t(x_i)+\frac{1}{2}h_if_t^2(x_i)]+\Omega(f_t)\\
+where \; g_i =\frac{\partial l(y_i, \hat y_i^{(t-1)})}{\partial \hat y_i^{(t-1)}}\;, h_i =\frac{\partial ^2l(y_i, \hat y_i^{(t-1)})}{\partial \hat y_i^{(t-1)}}
+$$
+
+* xgboost寻找分割点的标准是最大化，枚举可行的分割点，选择增益最大的划分，继续同样的操作，直到满足某阈值或得到纯节点。
+
+$$
+L_{split}=\frac{1}{2}[\frac{G_L^2}{H_L+\lambda}+\frac{G_R^2}{H_R+\lambda}-\frac{(G_L+G_R)^2}{H_L+H_R+\lambda}]-\gamma \\
+where\; G_L=\sum_{i\in I_L}g_i \; G_R=\sum_{i\in I_R}g_i \;H_L=\sum_{i\in I_L}h_i\;H_R=\sum_{i\in I_R}h_i
+$$
+
+xgboost与GBDT除了上述三点不同之外，xgboost在实现上还做了许多优化：
+
+1. 在寻找最佳分割点时，考虑传统的枚举每个特征的所有可能分割点的贪心法效率太低，xgboost实现了一种近似的算法。大致的思想是根据百分位法列举几个可能成为分割点的候选者，然后从候选者中根据上面求分割点的公式计算找出最佳的分割点。
+2. xgboost考虑了训练数据为稀疏值的情况，可以为缺失值或者指定的值指定分支的默认方向，这能大大提升算法的效率，paper提到50倍。
+3. 特征列排序后以块的形式存储在内存中，在迭代中可以重复使用；虽然boosting算法迭代必须串行，但是在处理每个特征列时可以做到并行。
+4. 按照特征列方式存储能优化寻找最佳的分割点，但是当以行计算梯度数据时会导致内存的不连续访问，严重时会导致cache miss，降低算法效率。paper中提到，可先将数据收集到线程内部的buffer，然后再计算，提高算法的效率。
+5. xgboost 还考虑了当数据量比较大，内存不够时怎么有效的使用磁盘，主要是结合多线程、数据压缩、分片的方法，尽可能的提高算法的效率。
+
+
+
 ## GBDT小结
 
 GBDT主要的优点有：
@@ -137,11 +177,11 @@ GBDT主要的优点有：
 
 2) 在相对少的调参时间情况下，预测的准备率也可以比较高。这个是相对SVM来说的。
 
-3）使用一些健壮的损失函数，对异常值的鲁棒性非常强。比如 Huber损失函数和Quantile损失函数。
+3) 使用一些健壮的损失函数，对异常值的鲁棒性非常强。比如 Huber损失函数和Quantile损失函数。
 
 GBDT的主要缺点有：
 
-1)由于弱学习器之间存在依赖关系，难以并行训练数据。不过可以通过自采样的SGBT来达到部分并行。
+4) 由于弱学习器之间存在依赖关系，难以并行训练数据。不过可以通过自采样的SGBT来达到部分并行。
 
  
 
@@ -152,3 +192,5 @@ GBDT的主要缺点有：
 [使用sklearn进行集成学习——理论](http://www.cnblogs.com/jasonfreak/p/5657196.html)
 
 [梯度提升树(GBDT)原理小结](http://www.cnblogs.com/pinard/p/6140514.html)
+
+[GB, XGBOOST](http://blog.csdn.net/shenxiaoming77/article/details/51542982)
