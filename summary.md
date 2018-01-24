@@ -15,3 +15,4 @@
     * [集成学习理论](part4/ensemble_learning.md)
     * [随机森林](part4/random_forest.md)
     * [Adaboost算法](part4/adaboost.md)
+    * [GradientBoosting](part4/GradientBoosting.md)

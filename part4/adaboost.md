@@ -1,4 +1,4 @@
-## Adaboost
+##  Adaboost
 
 ### Boosting
 
@@ -27,7 +27,7 @@ Boosting算法族中需要解决的4大问题如下：
 
 #### AdaBoost二元分类问题算法流程
 
-输入：训练数据集$$T=\{(x_1, y_1),(x_2, y_2),\cdots,(x_N, y_N)\}$$，其中$$x_i \\subseteq R^n, y_i \in {-1, +1}$$。假设迭代次数为K。
+输入：训练数据集$$T=\{(x_1, y_1),(x_2, y_2),\cdots,(x_N, y_N)\}$$，其中$$x_i \subseteq R^n, y_i \in {-1, +1}$$。假设迭代次数为K。
 
 输出：最终强分类器$$f(x)$$。
 
@@ -99,7 +99,7 @@ $$
 
 * 损失函数—指数函数
 
-Adaboost损失函数为指数函数，即定义损失函数为：
+ Adaboost损失函数为指数函数，即定义**损失函数**为：
 $$
 (\alpha_k, G_k(x)) = arg\underbrace {min}_{\alpha, G}\sum_{i=1}^mexp(-y_i f_k(x))
 $$
@@ -111,7 +111,7 @@ $$
 
 带入损失函数得到下式：
 $$
-(\alpha_k, G_k(x)) = arg\underbrace {min}_{\alpha, G}\sum_{i=1}^mw_{ki}^{'}exp(-y_i\alpha G(x)))
+(\alpha_k, G_k(x)) = arg\underbrace {min}_{\alpha, G}\sum_{i=1}^mw_{ki}^{'}exp(-y_i\alpha G(x))
 $$
 首先，求解$$G_k(x)$$，对于任意的$$\alpha \gt 0$$，上式最小的$$G_k(x)$$可以表示为：
 $$
